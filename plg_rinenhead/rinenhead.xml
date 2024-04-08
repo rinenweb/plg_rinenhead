@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="plugin" group="system" method="upgrade">
+    <name>System - RinenHead Inserter</name>
+    <author>Rinenweb</author>
+    <creationDate>April 2024</creationDate>
+    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+    <authorEmail>info@rinenweb.eu</authorEmail>
+    <authorUrl>https://www.rinenweb.eu</authorUrl>
+    <version>1.0</version>
+    <description>This plugin inserts HTML tags into the head section of every page.</description>
+    <files>
+        <filename plugin="rinenhead">rinenhead.php</filename>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="customhtml" type="textarea" filter="raw" default="" label="Custom HTML" description="Enter the custom HTML to be added to the head section" rows="10" cols="40" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
+
