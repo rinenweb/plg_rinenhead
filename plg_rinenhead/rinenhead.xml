@@ -15,6 +15,7 @@
         <fields name="params">
             <fieldset name="basic">
                 <field name="customhtml" type="textarea" filter="raw" default="" label="Custom HTML" description="Enter the custom HTML to be added to the head section" rows="10" cols="40" />
+				<field name="customjs" type="textarea" filter="raw" default="" label="Custom JavaScript" description="Enter the custom JavaScript to be added to the bottom of the body section" rows="10" cols="40" />
             </fieldset>
         </fields>
     </config>
