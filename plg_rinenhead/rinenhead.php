@@ -17,7 +17,7 @@ class PlgSystemRinenhead extends CMSPlugin
 {
     public function onBeforeCompileHead()
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         
         // Only run this in the front end
         if ($app->isClient('site')) {
