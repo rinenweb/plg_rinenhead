@@ -40,7 +40,7 @@ class PlgSystemRinenhead extends CMSPlugin
 
             if (!empty($customJs)) {
                 // Append the custom JavaScript before the closing </body> tag
-                $body = str_replace('</body>', "<script type='text/javascript'>\n$customJs\n</script>\n</body>", $body);
+                $body = str_replace('</body>', "$customJs\n</body>", $body);
                 $app->setBody($body);
             }
         }
