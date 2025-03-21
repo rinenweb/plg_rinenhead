@@ -24,9 +24,9 @@ This Joomla! plugin allows administrators to inject custom HTML into the <head> 
 
 After installation, configure the plugin by editing its parameters:
 
-Head Content: Enter HTML code to be inserted inside the <head> tag.
+**Head Content**: Enter HTML code to be inserted inside the "<head>" tag.
 
-Body Content: Enter JavaScript code to be placed before the closing </body> tag.
+**Body Content**: Enter JavaScript code to be placed before the closing "</body>" tag.
 
 ## Usage
 
