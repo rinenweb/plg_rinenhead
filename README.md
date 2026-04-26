@@ -34,7 +34,7 @@ Once configured, the plugin will automatically inject the specified content into
 
 ## Compatibility
 
-- Joomla! 4.x / Joomla! 5.x
+- Joomla! 4.x / 5.x / 6.x
 - PHP 7.4+ / PHP 8+
 
 ## License and Disclaimer
