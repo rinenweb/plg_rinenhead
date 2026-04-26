@@ -1,48 +1,89 @@
 <?php
-
 /**
  * System Plugin for Joomla! - RinenHead
- * @author     Ioannis Fytros <info@rinenweb.eu>
- * @license    GNU GPL v3 or later
+ *
+ * @author  Ioannis Fytros <info@rinenweb.eu>
+ * @license GNU GPL v3 or later
  */
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
-
+use Joomla\CMS\Plugin\CMSPlugin;
 
 class PlgSystemRinenhead extends CMSPlugin
-  
 {
+
+    protected $autoloadLanguage = true;
+
+    private function getApp()
+    {
+        if (method_exists($this, 'getApplication')) {
+            $app = $this->getApplication();
+
+            if ($app) {
+                return $app;
+            }
+        }
+
+        return Factory::getApplication();
+    }
+
+    /**
+     * Add custom markup to the document head.
+     *
+     * @return void
+     */
     public function onBeforeCompileHead()
     {
-        $app = Factory::getApplication();
-        
-        // Only run this in the front end
-        if ($app->isClient('site')) {
-            $doc = Factory::getDocument();
-            $customHtml = $this->params->get('customhtml', '');
-            
-            if (!empty($customHtml)) {
-                $doc->addCustomTag($customHtml);
-            }
+        $app = $this->getApp();
+
+        if (method_exists($app, 'isClient') && !$app->isClient('site')) {
+            return;
         }
+
+        $customHtml = trim((string) $this->params->get('customhtml', ''));
+
+        if ($customHtml === '') {
+            return;
+        }
+
+        $document = method_exists($app, 'getDocument') ? $app->getDocument() : Factory::getDocument();
+
+        if (method_exists($document, 'getType') && $document->getType() !== 'html') {
+            return;
+        }
+
+        $document->addCustomTag($customHtml);
     }
-	public function onAfterRender()
+
+    /**
+     * Add custom markup before the closing body tag.
+     *
+     * @return void
+     */
+    public function onAfterRender()
     {
-        $app = Factory::getApplication();
+        $app = $this->getApp();
 
-        // Only run this in the front end
-        if ($app->isClient('site')) {
-            $body = $app->getBody();
-            $customJs = $this->params->get('customjs', '');
-
-            if (!empty($customJs)) {
-                // Append the custom JavaScript before the closing </body> tag
-                $body = str_replace('</body>', "$customJs\n</body>", $body);
-                $app->setBody($body);
-            }
+        if (method_exists($app, 'isClient') && !$app->isClient('site')) {
+            return;
         }
+
+        $customJs = trim((string) $this->params->get('customjs', ''));
+
+        if ($customJs === '') {
+            return;
+        }
+
+        $body = $app->getBody();
+
+        if (stripos($body, '</body>') !== false) {
+            $body = preg_replace('/<\/body\s*>/i', "\n" . $customJs . "\n</body>", $body, 1);
+        } else {
+            $body .= "\n" . $customJs;
+        }
+
+        $app->setBody($body);
     }
 }
