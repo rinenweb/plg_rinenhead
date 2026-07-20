@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>PLG_SYSTEM_RINENHEAD</name>
+        <description>System - RinenHead Inserter</description>
+        <element>rinenhead</element>
+        <type>plugin</type>
+        <folder>system</folder>
+        <version>1.2</version>
+        <infourl title="RinenHead">https://github.com/rinenweb/plg_rinenhead/releases/tag/v1.2</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/rinenweb/plg_rinenhead/releases/download/v1.2/plg_rinenhead.zip</downloadurl>
+        </downloads>
+        <maintainer>Rinenweb</maintainer>
+        <maintainerurl>https://www.rinenweb.eu</maintainerurl>
+        <targetplatform name="joomla" version="4\.[0-9]+|5\.[0-9]+|6\.[0-9]+"/>
+        <php_minimum>7.4.0</php_minimum>
+    </update>
+</updates>
