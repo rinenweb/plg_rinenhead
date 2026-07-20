@@ -2,11 +2,11 @@
 <extension version="4.0" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_RINENHEAD</name>
     <author>Rinenweb</author>
-    <creationDate>April 2026</creationDate>
+    <creationDate>20 July 2026</creationDate>
     <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
     <authorEmail>info@rinenweb.eu</authorEmail>
     <authorUrl>https://www.rinenweb.eu</authorUrl>
-    <version>1.1</version>
+    <version>1.2</version>
     <description>PLG_SYSTEM_RINENHEAD_XML_DESCRIPTION</description>
     <files>
         <filename plugin="rinenhead">rinenhead.php</filename>
@@ -25,4 +25,7 @@
             </fieldset>
         </fields>
     </config>
+    <updateservers>
+	<server type="extension" name="RinenHead Plugin updates">https://raw.githubusercontent.com/rinenweb/plg_rinenhead/main/manifest.xml</server>
+    </updateservers>
 </extension>
