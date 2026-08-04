@@ -81,47 +81,48 @@ class PlgSystemRinenhead extends CMSPlugin implements SubscriberInterface
      * @param   Event  $event  The dispatched event.
      * @return  void
      */
-public function onAfterRender(Event $event): void
-{
-    $app = $this->getApp();
-
-    if (!$app->isClient('site')) {
-        return;
+    public function onAfterRender(Event $event): void
+        {
+            $app = $this->getApp();
+        
+            if (!$app->isClient('site')) {
+                return;
+            }
+        
+            $document = $app->getDocument();
+        
+            if ($document->getType() !== 'html') {
+                return;
+            }
+        
+            $customJs = trim((string) $this->params->get('customjs', ''));
+        
+            if ($customJs === '') {
+                return;
+            }
+        
+            // Wrap plain JavaScript while leaving existing HTML markup unchanged.
+            if (preg_match('/^\s*</', $customJs) !== 1) {
+                $customJs = "<script>\n" . $customJs . "\n</script>";
+            }
+        
+            $body = $app->getBody();
+        
+            if (stripos($body, '</body>') === false) {
+                return;
+            }
+        
+            $replaced = preg_replace_callback(
+                '/<\/body\s*>/i',
+                static function (array $matches) use ($customJs): string {
+                    return "\n" . $customJs . "\n" . $matches[0];
+                },
+                $body,
+                1
+            );
+        
+            if ($replaced !== null) {
+                $app->setBody($replaced);
+            }
+        }
     }
-
-    $document = $app->getDocument();
-
-    if ($document->getType() !== 'html') {
-        return;
-    }
-
-    $customJs = trim((string) $this->params->get('customjs', ''));
-
-    if ($customJs === '') {
-        return;
-    }
-
-    // Wrap plain JavaScript while leaving existing HTML markup unchanged.
-    if (preg_match('/^\s*</', $customJs) !== 1) {
-        $customJs = "<script>\n" . $customJs . "\n</script>";
-    }
-
-    $body = $app->getBody();
-
-    if (stripos($body, '</body>') === false) {
-        return;
-    }
-
-    $replaced = preg_replace_callback(
-        '/<\/body\s*>/i',
-        static function (array $matches) use ($customJs): string {
-            return "\n" . $customJs . "\n" . $matches[0];
-        },
-        $body,
-        1
-    );
-
-    if ($replaced !== null) {
-        $app->setBody($replaced);
-    }
-}
