@@ -81,33 +81,47 @@ class PlgSystemRinenhead extends CMSPlugin implements SubscriberInterface
      * @param   Event  $event  The dispatched event.
      * @return  void
      */
-    public function onAfterRender(Event $event): void
-    {
-        $app = $this->getApp();
+public function onAfterRender(Event $event): void
+{
+    $app = $this->getApp();
 
-        if (!$app->isClient('site')) {
-            return;
-        }
+    if (!$app->isClient('site')) {
+        return;
+    }
 
-        $customJs = trim((string) $this->params->get('customjs', ''));
+    $document = $app->getDocument();
 
-        if ($customJs === '') {
-            return;
-        }
+    if ($document->getType() !== 'html') {
+        return;
+    }
 
-        $body = $app->getBody();
+    $customJs = trim((string) $this->params->get('customjs', ''));
 
-        if (stripos($body, '</body>') !== false) {
-            $replaced = preg_replace('/<\/body\s*>/i', "\n" . $customJs . "\n</body>", $body, 1);
+    if ($customJs === '') {
+        return;
+    }
 
-            // preg_replace returns null on failure; only overwrite on success.
-            if ($replaced !== null) {
-                $body = $replaced;
-            }
-        } else {
-            $body .= "\n" . $customJs;
-        }
+    // Wrap plain JavaScript while leaving existing HTML markup unchanged.
+    if (preg_match('/^\s*</', $customJs) !== 1) {
+        $customJs = "<script>\n" . $customJs . "\n</script>";
+    }
 
-        $app->setBody($body);
+    $body = $app->getBody();
+
+    if (stripos($body, '</body>') === false) {
+        return;
+    }
+
+    $replaced = preg_replace_callback(
+        '/<\/body\s*>/i',
+        static function (array $matches) use ($customJs): string {
+            return "\n" . $customJs . "\n" . $matches[0];
+        },
+        $body,
+        1
+    );
+
+    if ($replaced !== null) {
+        $app->setBody($replaced);
     }
 }
