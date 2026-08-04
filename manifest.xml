@@ -6,10 +6,10 @@
         <element>rinenhead</element>
         <type>plugin</type>
         <folder>system</folder>
-        <version>1.2</version>
-        <infourl title="RinenHead">https://github.com/rinenweb/plg_rinenhead/releases/tag/v1.2</infourl>
+        <version>1.3</version>
+        <infourl title="RinenHead">https://github.com/rinenweb/plg_rinenhead/releases/tag/v1.3</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/rinenweb/plg_rinenhead/releases/download/v1.2/plg_rinenhead.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/rinenweb/plg_rinenhead/releases/download/v1.3/plg_rinenhead.zip</downloadurl>
         </downloads>
         <maintainer>Rinenweb</maintainer>
         <maintainerurl>https://www.rinenweb.eu</maintainerurl>
